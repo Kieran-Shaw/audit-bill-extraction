@@ -2,7 +2,7 @@ import json
 
 import requests
 
-TEST_DATA = "/Users/kieranshaw/audit-bill-extraction/tests/create_folder.json"
+TEST_DATA = ""
 
 
 def test_local_endpoint():
