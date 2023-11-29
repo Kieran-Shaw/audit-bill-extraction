@@ -1,0 +1,58 @@
+{
+    "id": "88d0f8f4-2759-4b1c-874c-4420773d98e0",
+    "created": "2023-11-28T22:47:54.803Z",
+    "completed": "2023-11-28T22:47:55.004Z",
+    "status": "COMPLETE",
+    "type": "bill_metdata",
+    "configuration": "kaiser",
+    "environment": "development",
+    "page_count": 14,
+    "parsed_document": {
+        "billing_date_raw": {
+            "type": "string",
+            "value": "October 2023"
+        },
+        "total_amount_due": {
+            "source": "$6,746.13",
+            "value": 6746.13,
+            "unit": "$",
+            "type": "currency"
+        }
+    },
+    "validations": [],
+    "validation_summary": {
+        "fields": 2,
+        "fields_present": 2,
+        "errors": 0,
+        "warnings": 0,
+        "skipped": 0
+    },
+    "classification_summary": [
+        {
+            "configuration": "kaiser",
+            "score": {
+                "value": 2,
+                "fields_present": 2,
+                "penalties": 0
+            }
+        }
+    ],
+    "errors": [],
+    "file_metadata": {
+        "info": {
+            "author": "Kaiser Permanente",
+            "title": "Group Premium Bill",
+            "creator": "Quadient CXM AG~Inspire~15.0.658.0",
+            "producer": "macOS Version 14.0 (Build 23A344) Quartz PDFContext, AppendMode 1.1",
+            "creation_date": "2023-08-26T15:04:51.000Z",
+            "modification_date": "2023-11-16T23:18:02.000Z"
+        },
+        "metadata": {
+            "dc:creator": [
+                "Kaiser Permanente"
+            ],
+            "dc:title": "Group Premium Bill"
+        }
+    },
+    "coverage": 1
+}
