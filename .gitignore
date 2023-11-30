@@ -161,4 +161,4 @@ cython_debug/
 
 # custom
 responses/
-tests/*
+tests/**
