@@ -1,0 +1,11 @@
+steps:
+  # Build and deploy extract_metadata
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        if [[ "$_TRIGGER_NAME" == "extract-bill-metadata" ]]; then
+          cd bill-metadata
+          gcloud functions deploy extract-bill-metadata --runtime=python312 --trigger-http --source=. --region=us-central1 --entry-point=extract_metadata;
+        fi

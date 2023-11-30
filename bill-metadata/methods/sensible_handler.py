@@ -1,14 +1,11 @@
 import base64
-import os
 
 import requests
-from dotenv import load_dotenv
 
 
 class SensibleAPIHandler:
-    def __init__(self, config_name: str, environment: str):
-        load_dotenv()
-        self.sensible_key = os.getenv("SENSIBLE_KEY")
+    def __init__(self, sensible_key: str, config_name: str, environment: str):
+        self.sensible_key = sensible_key
         self.document_type = "bill_metadata"
         self.config_name = config_name
         self.environment = environment

@@ -30,8 +30,11 @@ def extract_metadata(request: flask.Request):
             dataset_name="extractions",
             table_name="bill_metadata_extractions",
         )
+        # Get the secret from Google Secret Manager
+        sensible_secret = gcs_handler.get_secret(secret_name="SENSIBLE_KEY")
+
         sensible_handler = SensibleAPIHandler(
-            config_name=carrier, environment=environment
+            sensible_key=sensible_secret, config_name=carrier, environment=environment
         )
 
         # Read the file from Google Cloud Storage
