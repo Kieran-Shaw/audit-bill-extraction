@@ -2,15 +2,18 @@ import json
 
 import requests
 
-TEST_DATA = ""
-
 
 def test_local_endpoint():
-    url = "http://localhost:8080"  # adjust the port if needed
+    url = "http://localhost:8080"  # Default port for Functions Framework
     headers = {"Content-Type": "application/json"}
 
-    with open(TEST_DATA) as f:
-        data = json.load(f)
+    # Sample data that mimics a real request payload
+    data = {
+        "bucket_name": "audit-bills",
+        "file_name": "blueshield_of_california/SUGARED_+_BRONZED_2023_11_30_14_14_03",
+        "carrier": "blueshield_of_california",
+        "environment": "development",
+    }
 
     response = requests.post(url, data=json.dumps(data), headers=headers)
 

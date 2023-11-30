@@ -1,42 +1,64 @@
-import base64
-import json
-import os
+import flask
 
-import requests
-from dotenv import load_dotenv
-
-load_dotenv()
-SENSIBLE_KEY = os.getenv("SENSIBLE_KEY")
-
-DOCUMENT_TYPE = "bill_metdata"
-CONFIG_NAME = "kaiser"
-FILE_PATH = "/Users/kieranshaw/Downloads/Kaiser Group Premium Bill.pdf"
-SAVE_PATH = (
-    "/Users/kieranshaw/audit-bill-extraction/responses/sensible_kaiser_response.json"
-)
-
-with open(FILE_PATH, "rb") as file:
-    file_bytes = file.read()
-    encoded_document = base64.b64encode(file_bytes).decode("utf-8")
+# import functions_framework
+from methods.gcs_handler import GCSHandler
+from methods.sensible_handler import SensibleAPIHandler
+from methods.sensible_response_handler import SensibleResponseHandler
 
 
-url = f"https://api.sensible.so/v0/extract/{DOCUMENT_TYPE}/{CONFIG_NAME}?environment=development"
+# @functions_framework.http
+def extract_metadata(request: flask.Request):
+    """Cloud function to extract metadata from a file using the Sensible API."""
+    try:
+        request_json = request.get_json()
 
-payload = {"document": encoded_document}
+        # Validate required parameters
+        required_params = ["bucket_name", "file_name", "carrier", "environment"]
+        if not all(param in request_json for param in required_params):
+            missing_params = [
+                param for param in required_params if param not in request_json
+            ]
+            return f"Missing required parameters: {', '.join(missing_params)}", 400
 
-headers = {
-    "accept": "application/json",
-    "content-type": "application/json",
-    "authorization": f"Bearer {SENSIBLE_KEY}",
-    "document_name": FILE_PATH,
-}
+        bucket_name = request_json["bucket_name"]
+        file_name = request_json["file_name"]
+        carrier = request_json["carrier"]
+        environment = request_json["environment"]
 
-response = requests.post(url, json=payload, headers=headers)
+        gcs_handler = GCSHandler(
+            bucket_name=bucket_name,
+            dataset_name="extractions",
+            table_name="bill_metadata_extractions",
+        )
+        sensible_handler = SensibleAPIHandler(
+            config_name=carrier, environment=environment
+        )
 
-if response.status_code == 200:
-    # Parse response
-    data = response.json()
+        # Read the file from Google Cloud Storage
+        file_bytes = gcs_handler.read_file(source_blob_name=file_name)
 
-    # Write to a file
-    with open(SAVE_PATH, "w") as json_file:
-        json.dump(data, json_file, indent=4)
+        # Encode the file to base64
+        encoded_document = sensible_handler.encode_file(file_bytes=file_bytes)
+
+        # Make the API request to Sensible API
+        response = sensible_handler.make_api_request(
+            encoded_document=encoded_document, document_name=file_name
+        )
+
+        # Save the response to BigQuery table
+        bigquery_uuid = gcs_handler.save_to_bigquery(
+            carrier_name=carrier, response_json=response.json()
+        )
+
+        # Instantiate the sensible response handler
+        sensible_response_handler = SensibleResponseHandler(
+            json_response=response.json(), carrier=carrier, bigquery_uuid=bigquery_uuid
+        )
+
+        parsed_response = sensible_response_handler.process_response()
+
+        return parsed_response
+
+    except Exception as e:
+        print(e)
+        return f"An error occurred: {str(e)}", 500
