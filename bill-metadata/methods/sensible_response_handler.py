@@ -17,11 +17,11 @@ class SensibleResponseHandler:
         """
         Process the JSON data based on carrier-specific rules.
         """
-        # FOR DEVELOPMENT
-        with open(
-            "/Users/kieranshaw/audit-bill-extraction/responses/sample.json", "w"
-        ) as file:
-            json.dump(self.full_response, file, indent=4)
+        # # FOR DEVELOPMENT
+        # with open(
+        #     "/Users/kieranshaw/audit-bill-extraction/responses/sample.json", "w"
+        # ) as file:
+        #     json.dump(self.full_response, file, indent=4)
 
         if self.carrier == "unitedhealthcare":
             return self._process_for_unitedhealthcare()

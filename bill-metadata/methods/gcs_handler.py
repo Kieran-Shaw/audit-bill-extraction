@@ -2,7 +2,7 @@ import datetime
 import json
 import uuid
 
-from google.cloud import bigquery, storage
+from google.cloud import bigquery, secretmanager, storage
 
 
 class GCSHandler:
@@ -18,10 +18,18 @@ class GCSHandler:
         self.bucket_name = bucket_name
         self.source_blob_name = None
 
+        ## Initialize Secret client
+        self.secret_client = secretmanager.SecretManagerServiceClient()
+
         # Initialize BigQuery client and set dataset and table
         self.bigquery_client = bigquery.Client(project=project_id)
         self.dataset_name = dataset_name
         self.table_name = table_name
+
+    def get_secret(self, secret_name: str):
+        name = f"projects/small-group-quote/secrets/{secret_name}/versions/latest"
+        response = self.secret_client.access_secret_version(name=name)
+        return response.payload.data.decode("UTF-8")
 
     def read_file(self, source_blob_name: str):
         """Read a file from Google Cloud Storage."""
