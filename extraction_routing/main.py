@@ -1,9 +1,10 @@
 import flask
-import functions_framework
+
+# import functions_framework
 from methods.routing import ExtractionRouter
 
 
-@functions_framework.http
+# @functions_framework.http
 def extraction_routing(request: flask.Request):
     """Cloud function to extract metadata from a file using the Sensible API."""
     try:
