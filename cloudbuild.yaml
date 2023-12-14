@@ -5,7 +5,7 @@ steps:
     args:
       - "-c"
       - |
-        if [[ "$_TRIGGER_NAME" == "extract-bill-metadata" ]]; then
-          cd bill-metadata
-          gcloud functions deploy extract-bill-metadata --runtime=python312 --trigger-http --source=. --region=us-central1 --entry-point=extract_metadata;
+        if [[ "$_TRIGGER_NAME" == "audit-bill-routing" ]]; then
+          cd extraction_routing
+          gcloud functions deploy extract-bill-metadata --runtime=python312 --trigger-http --source=. --region=us-central1 --entry-point=extraction_routing;
         fi
