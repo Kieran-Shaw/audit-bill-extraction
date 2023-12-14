@@ -13,7 +13,7 @@ class GCSHandler:
         project_id: str = "small-group-quote",
     ):
         # Initialize GCS client
-        self.storage_client = storage.Client(project=project_id)
+        self.storage_client = storage.Client()
         self.bucket_name = bucket_name
         self.source_blob_name = file_path
 
@@ -30,17 +30,18 @@ class GCSHandler:
         bucket = self.storage_client.bucket(self.bucket_name)
         blob = bucket.blob(self.source_blob_name)
         signed_url = blob.generate_signed_url(
+            version="v4",
             # This URL is valid for specified minutes
             expiration=datetime.timedelta(minutes=5),
             # Allow GET requests using this URL.
             method="GET",
-            credentials=self.get_credentials(),
+            # credentials=self.get_credentials(),
         )
         return signed_url
 
-    def get_credentials(self):
-        """Returns a Google service account credentials object."""
-        credentials = service_account.Credentials.from_service_account_file(
-            os.environ["GOOGLE_APPLICATION_CREDENTIALS"]
-        )
-        return credentials
+    # def get_credentials(self):
+    #     """Returns a Google service account credentials object."""
+    #     credentials = service_account.Credentials.from_service_account_file(
+    #         os.environ["GOOGLE_APPLICATION_CREDENTIALS"]
+    #     )
+    #     return credentials
