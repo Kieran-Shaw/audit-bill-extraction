@@ -1,6 +1,8 @@
 import datetime
+import os
 
 from google.cloud import secretmanager, storage
+from google.oauth2 import service_account
 
 
 class GCSHandler:
@@ -32,5 +34,13 @@ class GCSHandler:
             expiration=datetime.timedelta(minutes=5),
             # Allow GET requests using this URL.
             method="GET",
+            credentials=self.get_credentials(),
         )
         return signed_url
+
+    def get_credentials(self):
+        """Returns a Google service account credentials object."""
+        credentials = service_account.Credentials.from_service_account_file(
+            os.environ["GOOGLE_APPLICATION_CREDENTIALS"]
+        )
+        return credentials

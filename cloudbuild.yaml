@@ -7,5 +7,5 @@ steps:
       - |
         if [[ "$_TRIGGER_NAME" == "audit-bill-routing" ]]; then
           cd extraction_routing
-          gcloud functions deploy extract-bill-metadata --runtime=python312 --trigger-http --source=. --region=us-central1 --entry-point=extraction_routing;
+          gcloud functions deploy bill-extraction-routing --runtime=python312 --trigger-http --source=. --region=us-central1 --entry-point=extraction_routing --allowUnauthenticated;
         fi
