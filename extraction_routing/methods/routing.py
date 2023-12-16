@@ -1,5 +1,4 @@
 from methods.gcs_handler import GCSHandler
-from methods.google_ai import GoogleDocumentAIExtractor
 from methods.sensible import SensibleExtractor
 
 
@@ -34,16 +33,10 @@ class ExtractionRouter:
             webhook_url = self.configuration[
                 "webhook_url"
             ]  # cloud function sensible post process url
-            webhook_payload = self.data  # Replace with your custom payload
+            webhook_payload = self.data # payload to send to sensible
             extraction_response = extractor.post_extraction(
                 self.signed_url, webhook_url, webhook_payload
             )
             return extraction_response
-
-        # if google document ai
-        elif self.configuration["method"] == "google_document_ai":
-            extractor = GoogleDocumentAIExtractor(self.configuration)
-            # Perform Google Document AI extraction
-            # ...
         else:
             raise ValueError("Unsupported extraction method")
