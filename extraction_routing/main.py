@@ -1,5 +1,4 @@
 import flask
-
 # import functions_framework
 from methods.routing import ExtractionRouter
 
