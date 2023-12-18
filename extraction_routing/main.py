@@ -1,4 +1,5 @@
 import flask
+
 # import functions_framework
 from methods.routing import ExtractionRouter
 
@@ -10,7 +11,7 @@ def extraction_routing(request: flask.Request):
         request_json = request.get_json()
 
         # Validate required parameters
-        required_params = ["bucket_name", "file_path", "configuration"]
+        required_params = ["id", "bucket_name", "file_path", "configuration"]
         if not all(param in request_json for param in required_params):
             missing_params = [
                 param for param in required_params if param not in request_json

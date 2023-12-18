@@ -1,0 +1,12 @@
+{
+  "id": "45f4efa5-f6dd-467f-a9ee-8cdcbc5f460b",
+  "bucket_name": "audit-bills",
+  "file_path": "kaiser_permanente/Carlsmed_2023_12_07_13_28_15",
+  "configuration": {
+    "method": "sensible",
+    "config_name": "kaiser_permanente",
+    "environment": "production",
+    "document_type": "carrier_bills",
+    "webhook_url": "https://api.retool.com/v1/workflows/92c0f3b7-b0a9-464a-bf14-23063a0c0d9c/startTrigger?workflowApiKey=retool_wk_62c5bfb747424068bb505895f2bde77a"
+  }
+}
