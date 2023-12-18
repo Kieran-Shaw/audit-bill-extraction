@@ -1,0 +1,12 @@
+{
+  "bucket_name": "audit-bills",
+  "file_path": "blueshield_of_california/SUGARED_+_BRONZED_2023_12_01_12_12_43",
+  "configuration": {
+    "method": "google_document_ai",
+    "environment": "production",
+    "webhook_url": null,
+    "processor_id": "64a9c8f4b6847e22",
+    "processor_name": "bluecrossblueshield_extractor"
+  },
+  "id": "4ebed172-96d0-4b73-9c35-b7e324d36c62"
+}
