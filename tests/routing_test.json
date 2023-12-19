@@ -5,7 +5,7 @@
     "method": "sensible",
     "config_name": "blueshield_ca",
     "environment": "production",
-    "webhook_url": "https://webhook.site/a29c810c-9edd-4775-8100-397370d2445f",
+    "webhook_url": "https://api.retool.com/v1/workflows/7ba04f97-6229-474e-a9d7-9e0e913e09b0/startTrigger?workflowApiKey=retool_wk_a035201e255c4f5597a40b0f8a1c22d8",
     "document_type": "carrier_bills"
   },
   "id": "4ebed172-96d0-4b73-9c35-b7e324d36c62"
