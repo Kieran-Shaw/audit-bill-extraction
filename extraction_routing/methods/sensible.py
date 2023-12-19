@@ -8,7 +8,7 @@ class SensibleExtractor:
         self.bill_submission_id = data["id"]
         self.api_key = api_key
 
-    def post_extraction(self, document_url, webhook_url, webhook_payload):
+    def post_extraction(self, document_url, webhook_url: str):
         # Endpoint for Sensible's extract_from_url
         endpoint = f"https://api.sensible.so/v0/extract_from_url/{self.config['document_type']}/{self.config['config_name']}"
 

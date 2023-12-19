@@ -2,9 +2,7 @@ import json
 
 import requests
 
-JSON_TEST_FILE_PATH = (
-    "/Users/kieranshaw/audit-bill-extraction/tests/blue_shield_test.json"
-)
+JSON_TEST_FILE_PATH = "/Users/kieranshaw/audit-bill-extraction/tests/routing_test.json"
 
 
 def test_local_endpoint(json_file_path):
